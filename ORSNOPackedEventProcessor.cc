@@ -83,34 +83,43 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::ProcessDataRecord(UInt_t
 		//see ORMTCDecoder.hh for other...
 	}
 	else if (thisDataId == fPMTDataId) {
+		//record[0] was swapped by ORVReader
+		//record[1] was written by ORCA
+		ORUtils::Swap(record[1]);
+		//the big endian MegaBundle follows
                 fPMTDecoder.Swap(record);
 
 		//the Megabundle was sent by crate
 		//fPMTDecoder.CrateOf(record);
 
-                unsigned int bundle_length = (fPMTDecoder.LengthOf(record) - 2) / 3;
-                record += 2;
-                for (; bundle_length != 0; bundle_length--) {
-			//decode PMT bundle
-                        //fPMTDecoder.GTId(record);
-                        //fPMTDecoder.Crate(record);
-                        //fPMTDecoder.Card(record);
-                        //fPMTDecoder.Channel(record);
-                        //fPMTDecoder.Cell(record);
-                        //fPMTDecoder.CGT16(record);
-                        //fPMTDecoder.CGT24(record);
-                        //fPMTDecoder.ES16(record);
-                        //fPMTDecoder.Missed(record);
-                        //fPMTDecoder.NC(record);
-                        //fPMTDecoder.LGI(record);
-                        //fPMTDecoder.QHL(record);
-                        //fPMTDecoder.QHS(record);
-                        //fPMTDecoder.QLX(record);
-                        //fPMTDecoder.TAC(record);
-			//see ORPMTDecoder for rest
-                        record += 3;
-                }
-        }
+		if (fPMTDecoder.RevOf(record) == 0) {
+			unsigned int bundle_length = (fPMTDecoder.LengthOf(record) - 2) / 3;
+			record += 2;
+			for (; bundle_length != 0; bundle_length--) {
+				//decode PMT bundle
+				//fPMTDecoder.GTId(record);
+				//fPMTDecoder.Crate(record);
+				//fPMTDecoder.Card(record);
+				//fPMTDecoder.Channel(record);
+				//fPMTDecoder.Cell(record);
+				//fPMTDecoder.CGT16(record);
+				//fPMTDecoder.CGT24(record);
+				//fPMTDecoder.ES16(record);
+				//fPMTDecoder.Missed(record);
+				//fPMTDecoder.NC(record);
+				//fPMTDecoder.LGI(record);
+				//fPMTDecoder.QHL(record);
+				//fPMTDecoder.QHS(record);
+				//fPMTDecoder.QLX(record);
+				//fPMTDecoder.TAC(record);
+				//see ORPMTDecoder for rest
+				record += 3;
+			}
+		}
+		else {
+			//new MegaBundle with miniBundles
+		}
+	}
 	else if (thisDataId == fCaenDataId) {
 		ORDataProcessor::EReturnCode code = ORCompoundDataProcessor::ProcessDataRecord(record);
 		if (code != kSuccess) return code;

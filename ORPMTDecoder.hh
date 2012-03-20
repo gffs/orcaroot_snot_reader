@@ -18,10 +18,13 @@ class ORPMTDecoder : public ORVDataDecoder
 	//extraction works per PMT bundle, so call it with the proper offset
 
 	virtual inline UInt_t CrateOf(UInt_t* record)
-		{ return record[1]; }
+		{ return (record[1] & 0x1f); }
 
 	virtual inline UInt_t CardOf(UInt_t* /*record*/)
 		{ return 0; }
+
+	virtual inline UInt_t RevOf(UInt_t* record)
+		{ return (record[1] >> 5); } // &0x3?
 
 	virtual inline UInt_t GTId(UInt_t* record)
 		{ return (record[0] & 0x0000ffff) | ((record[2] << 4) & 0x000f0000) | ((record[2] >> 8) & 0x00f00000); }

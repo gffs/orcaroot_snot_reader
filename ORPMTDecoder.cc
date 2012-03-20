@@ -16,7 +16,7 @@ ORPMTDecoder::ORPMTDecoder() {
 void ORPMTDecoder::Swap(UInt_t* dataRecord)
 {
 	if (fMustSwap) {
-		for(size_t i=1; i<LengthOf(dataRecord);i++) {
+		for(size_t i=2; i<LengthOf(dataRecord);i++) {
 		ORUtils::Swap(dataRecord[i]);
 		}
 	}
