@@ -51,5 +51,15 @@ The states of FEC FIFOs and XL3 memory buffer are pushed by XL3 as a body of the
 
 PMT base currents
 -----------------
+PMT base currents as recieved from XL3. ORCA adds a timestamp, and the crate number. All the 16*32 ADC values are filled, only the masked in are useful.
 
+    {
+    "type": "pmt_base_current",
+    "timestamp": "yyyy-MM-ddTHH:mm:ss.SSSZ" //ORCA
+    "crate_num": 0, //ORCA
+    "slot_mask": 0xffff0000,
+    "channel_mask": [ 0xffffffff, ..., 0xffffffff ], //all 16 slots
+    "error_flags": 0x0000,
+    "adc": [ [ 0*0, ..., 0*31], ..., [ 7*0, ..., 7*31 ], //16 slots * 32 channels
+    }
 
