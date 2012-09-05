@@ -9,6 +9,7 @@
 #include "ORCaen1720Decoder.hh"
 #include "ORFIFODecoder.hh"
 #include "ORPMTBaseCurrentDecoder.hh"
+#include "ORXL3HVDecoder.hh"
 
 #include <zmq.hpp>
 
@@ -29,6 +30,7 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     ORRunDecoder fRunDecoder;
     ORFIFODecoder fFIFODecoder;
     ORPMTBaseCurrentDecoder fPMTBaseCurrentDecoder;
+    ORXL3HVDecoder fXL3HVDecoder;
 
     UInt_t fMTCDataId; 
     UInt_t fPMTDataId; 
@@ -37,6 +39,7 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     UInt_t fRunId;
     UInt_t fFIFODataId;
     UInt_t fPMTBaseCurrentDataId;
+    UInt_t fXL3HVDataId;
 
     ORDataProcessor* fMTCProcessor;
     ORDataProcessor* fPMTProcessor;
@@ -45,6 +48,7 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     ORDataProcessor* fRunProcessor;
     ORDataProcessor* fFIFOProcessor;
     ORDataProcessor* fPMTBaseCurrentProcessor;
+    ORDataProcessor* fXL3HVProcessor;
 
     zmq::context_t* context;
     zmq::socket_t* socket_json;

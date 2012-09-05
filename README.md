@@ -63,3 +63,17 @@ PMT base currents as recieved from XL3. ORCA adds a timestamp, and the crate num
     "adc": [ [ 0*0, ..., 0*31], ..., [ 7*0, ..., 7*31 ], //16 slots * 32 channels
     }
 
+HV status
+---------
+Voltages and currents as shipped by XL3, the scale is stretched.
+
+    {
+    "type": "xl3_hv",
+    "timestamp": "yyyy-MM-ddTHH:mm:ss.SSSZ" //ORCA
+    "crate_num": 0, //ORCA
+    "vlt_a": 0., //V
+    "vlt_b": 0., //V
+    "crt_a": 0., //mA
+    "crt_b": 0. //mA
+    }
+
