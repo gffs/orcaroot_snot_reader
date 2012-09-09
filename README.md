@@ -77,3 +77,19 @@ Voltages and currents as shipped by XL3, the scale is stretched.
     "crt_b": 0. //mA
     }
 
+XL3 voltages
+------------
+
+    {
+    "type": "xl3_vlt",
+    "timestamp": "yyyy-MM-ddTHH:mm:ss.SSSZ" //ORCA
+    "crate_num": 0, //ORCA
+    "VCC": 0.,
+    "VEE": 0.,
+    "VP24": 0.,
+    "VM24": 0.,
+    "TMP0": 0.,
+    "TMP1": 0.,
+    "TMP2": 0.,
+    }
+
