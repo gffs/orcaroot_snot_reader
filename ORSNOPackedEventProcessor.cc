@@ -38,6 +38,9 @@ ORSNOPackedEventProcessor::ORSNOPackedEventProcessor(std::string /*label*/)
     fXL3VltProcessor = new ORDataProcessor(&fXL3VltDecoder);
     AddProcessor(fXL3VltProcessor);
 
+    fFECVltProcessor = new ORDataProcessor(&fFECVltDecoder);
+    AddProcessor(fFECVltProcessor);
+
     context = new zmq::context_t(1);
     socket_json = new zmq::socket_t(*context, ZMQ_PUB);
     socket_json->bind("tcp://localhost:5028");
@@ -58,6 +61,7 @@ ORSNOPackedEventProcessor::~ORSNOPackedEventProcessor()
     delete fPMTBaseCurrentProcessor;
     delete fXL3HVProcessor;
     delete fXL3VltProcessor;
+    delete fFECVltProcessor;
 }
 
 
@@ -73,6 +77,7 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::StartRun()
     fPMTBaseCurrentDataId = fPMTBaseCurrentProcessor->GetDataId();
     fXL3HVDataId = fXL3HVProcessor->GetDataId();
     fXL3VltDataId = fXL3VltProcessor->GetDataId();
+    fFECVltDataId = fFECVltProcessor->GetDataId();
 
     return kSuccess;
 }
@@ -220,6 +225,15 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::ProcessDataRecord(UInt_t
         if (code != kSuccess) return code;
 
         const std::string data(fXL3VltDecoder.ToJson(record));
+        zmq::message_t msg(data.length());
+        memcpy((void*) msg.data(), data.c_str(), data.length());
+        socket_json->send(msg);
+    }
+    else if (thisDataId == fFECVltDataId) {
+        ORDataProcessor::EReturnCode code = ORCompoundDataProcessor::ProcessDataRecord(record);
+        if (code != kSuccess) return code;
+
+        const std::string data(fFECVltDecoder.ToJson(record));
         zmq::message_t msg(data.length());
         memcpy((void*) msg.data(), data.c_str(), data.length());
         socket_json->send(msg);

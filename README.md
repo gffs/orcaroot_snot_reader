@@ -93,3 +93,15 @@ XL3 voltages
     "TMP2": 0.,
     }
 
+FEC voltages
+------------
+FEC voltages a packet per slot. There are 21 voltages in the array: -24V Sup, -15V Sup, VEE, -3.3V Sup, -2.0V Sup, 3.3V Sup, 4.0V Sup, VCC, 6.5V Sup, 8.0V Sup, 15V Sup, 24V Sup, -2.0V Ref, -1.0V Ref, 0.8V Ref, 1.0V Ref, 4.0V Ref, 5.0V Ref, Temp in deg C, Cal DAC, HV current in mA. 
+
+    {
+    "type": "fec_vlt",
+    "timestamp": "yyyy-MM-ddTHH:mm:ss.SSSZ" //ORCA
+    "crate_num": 0, //ORCA
+    "slot_num": 0, //ORCA
+    "voltage": [ 0., ... ] // 21 float voltages
+    }
+
