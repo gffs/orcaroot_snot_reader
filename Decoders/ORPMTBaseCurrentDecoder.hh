@@ -33,8 +33,11 @@ class ORPMTBaseCurrentDecoder : public ORVDataDecoder
     virtual inline UChar_t ADCForSlotAndChannel(UInt_t slot, UInt_t channel, UInt_t* record)
         { return ((UChar_t*)&record[20])[slot*32 + channel]; }
 
+    virtual inline UChar_t BusyForSlotAndChannel(UInt_t slot, UInt_t channel, UInt_t* record)
+        { return ((UChar_t*)&record[20 + 16*8])[slot*32 + channel]; }
+
     virtual const char* TimeStamp(UInt_t* record)
-        { return (const char*) (record + 20+16*8); }
+        { return (const char*) (record + 20 + 2*16*8); }
 
     virtual void Swap(UInt_t* dataRecord);
     virtual const std::string ToJson(UInt_t* record);

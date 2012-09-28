@@ -38,7 +38,21 @@ const std::string ORPMTBaseCurrentDecoder::ToJson(UInt_t* record)
         }
         json << " ]";
     }
-    json << "]\n";
+    json << "],\n"
+        << "\"busy\": [ ";
+
+    for (unsigned char slot = 0; slot < 16; slot++) {
+        if (slot) json << ",\n";
+        json << "[ ";
+        for (unsigned char channel = 0; channel < 32; channel++) {
+            if (channel) json << ", ";
+            json << BusyForSlotAndChannel(slot, channel, record);
+        }
+        json << " ]";
+    }
+
+    json << "]";
+
     json << "}";
     return json.str();
 }
