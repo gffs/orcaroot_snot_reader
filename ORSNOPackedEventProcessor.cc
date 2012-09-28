@@ -43,7 +43,14 @@ ORSNOPackedEventProcessor::ORSNOPackedEventProcessor(std::string /*label*/)
 
     context = new zmq::context_t(1);
     socket_json = new zmq::socket_t(*context, ZMQ_PUB);
-    socket_json->bind("tcp://localhost:5028");
+    try {
+        socket_json->bind("tcp://*:5028");
+    }
+    catch (zmq::error_t &e) {
+        cout << "json PUB socket bind failed with errno: " << e.num();
+        cout << ", " << e.what() << endl;
+        //exit?
+    }
 }
 
 
