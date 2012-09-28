@@ -32,10 +32,10 @@ there are always 32 channels per slot present, but only the `channel_mask` ones 
     "type": "cmos_counts",
     "timestamp": "yyyy-MM-ddTHH:mm:ss.SSSZ" //ORCA
     "crate_num": 0, //ORCA
-    "slot_mask": 0xffff0000,
+    "slot_mask": 0xffff,
     "channel_mask": [ 0xffffffff, ..., 0xffffffff ], //all 16 slots
     "error_flags": 0x0000,
-    "counts": [ [ 0*0, ..., 0*31], ..., [ 7*0, ..., 7*31 ], //8 slots * 32 channels
+    "counts": [ [ 0*0, ..., 0*31], ..., [ 7*0, ..., 7*31 ] //8 slots * 32 channels
     }
 
 FIFO state
@@ -57,10 +57,11 @@ PMT base currents as recieved from XL3. ORCA adds a timestamp, and the crate num
     "type": "pmt_base_current",
     "timestamp": "yyyy-MM-ddTHH:mm:ss.SSSZ" //ORCA
     "crate_num": 0, //ORCA
-    "slot_mask": 0xffff0000,
+    "slot_mask": 0xffff,
     "channel_mask": [ 0xffffffff, ..., 0xffffffff ], //all 16 slots
     "error_flags": 0x0000,
     "adc": [ [ 0*0, ..., 0*31], ..., [ 7*0, ..., 7*31 ], //16 slots * 32 channels
+    "busy_flag": [ [ 0*0, ..., 0*31], ..., [ 7*0, ..., 7*31 ] //16 slots * 32 channels
     }
 
 HV status
@@ -90,7 +91,7 @@ XL3 voltages
     "VM24": 0.,
     "TMP0": 0.,
     "TMP1": 0.,
-    "TMP2": 0.,
+    "TMP2": 0.
     }
 
 FEC voltages
