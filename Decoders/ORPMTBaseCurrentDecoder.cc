@@ -6,7 +6,7 @@
 void ORPMTBaseCurrentDecoder::Swap(UInt_t* dataRecord)
 {
     //do not swap the timestamp string at the end
-    for (size_t idx = 1; idx < 20+16*8; idx++) {
+    for (size_t idx = 1; idx < 20+16*8+16*8; idx++) {
         ORUtils::Swap(dataRecord[idx]);
     }
 }
@@ -34,7 +34,7 @@ const std::string ORPMTBaseCurrentDecoder::ToJson(UInt_t* record)
         json << "[ ";
         for (unsigned char channel = 0; channel < 32; channel++) {
             if (channel) json << ", ";
-            json << ADCForSlotAndChannel(slot, channel, record);
+            json << (unsigned short)ADCForSlotAndChannel(slot, channel, record);
         }
         json << " ]";
     }
@@ -46,7 +46,7 @@ const std::string ORPMTBaseCurrentDecoder::ToJson(UInt_t* record)
         json << "[ ";
         for (unsigned char channel = 0; channel < 32; channel++) {
             if (channel) json << ", ";
-            json << BusyForSlotAndChannel(slot, channel, record);
+            json << (unsigned short)BusyForSlotAndChannel(slot, channel, record);
         }
         json << " ]";
     }

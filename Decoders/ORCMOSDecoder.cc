@@ -6,7 +6,7 @@
 void ORCMOSDecoder::Swap(UInt_t* dataRecord)
 {
     //do not swap the string at the end
-    for (size_t idx = 1; idx <  21+8*32; idx++) {
+    for (size_t idx = 1; idx < 21+8*32; idx++) {
         ORUtils::Swap(dataRecord[idx]);
     }
 }
