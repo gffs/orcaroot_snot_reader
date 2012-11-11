@@ -14,10 +14,11 @@ void ORXL3HVDecoder::Swap(UInt_t* dataRecord)
 
 const std::string ORXL3HVDecoder::ToJson(UInt_t* record)
 {
-    std::ostringstream json("{\n");
+    std::ostringstream json;
     json << std::setprecision(5);
 
-    json << "\"type\": \"xl3_hv\",\n"
+    json << "{\n"
+        << "\"type\": \"xl3_hv\",\n"
         << "\"timestamp\": \"" << TimeStamp(record) << "\",\n"
         << "\"crate_num\": " << CrateNum(record) << ",\n"
         << "\"vlt_a\": " << VoltageA(record) << ",\n"

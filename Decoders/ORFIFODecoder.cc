@@ -6,10 +6,11 @@
 
 const std::string ORFIFODecoder::ToJson(UInt_t* record)
 {
-    std::ostringstream json("{\n");
+    std::ostringstream json;
     json << std::setprecision(3);
 
-    json << "\"type\": \"fifo_state\",\n"
+    json << "{\n"
+        << "\"type\": \"fifo_state\",\n"
         << "\"crate_num\": " << CrateNum(record) << ",\n"
         << "\"fifo\": [ ";
 

@@ -13,9 +13,10 @@ void ORPMTBaseCurrentDecoder::Swap(UInt_t* dataRecord)
 
 const std::string ORPMTBaseCurrentDecoder::ToJson(UInt_t* record)
 {
-    std::ostringstream json("{\n");
+    std::ostringstream json;
 
-    json << "\"type\": \"pmt_base_current\",\n"
+    json << "{\n"
+        << "\"type\": \"pmt_base_current\",\n"
         << "\"timestamp\": \"" << TimeStamp(record) << "\",\n"
         << "\"crate_num\": " << CrateNum(record) << ",\n"
         << "\"slot_mask\": " << SlotMask(record) << ",\n"

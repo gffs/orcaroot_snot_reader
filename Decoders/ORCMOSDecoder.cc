@@ -13,9 +13,10 @@ void ORCMOSDecoder::Swap(UInt_t* dataRecord)
 
 const std::string ORCMOSDecoder::ToJson(UInt_t* record)
 {
-    std::ostringstream json("{\n");
+    std::ostringstream json;
 
-    json << "\"type\":\"cmos_counts\",\n"
+    json << ("{\n")
+        << "\"type\":\"cmos_counts\",\n"
         << "\"timestamp\": \"" << TimeStamp(record) << "\",\n"
         << "\"crate_num\": " << CrateNum(record) << ",\n"
         << "\"slot_mask\": " << SlotMask(record) << ",\n"

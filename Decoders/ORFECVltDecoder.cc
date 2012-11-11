@@ -14,10 +14,11 @@ void ORFECVltDecoder::Swap(UInt_t* dataRecord)
 
 const std::string ORFECVltDecoder::ToJson(UInt_t* record)
 {
-    std::ostringstream json("{\n");
+    std::ostringstream json;
     json << std::setprecision(4);
 
-    json << "\"type\": \"fec_vlt\",\n"
+    json << "{\n"
+        << "\"type\": \"fec_vlt\",\n"
         << "\"timestamp\": \"" << TimeStamp(record) << "\",\n"
         << "\"crate_num\": " << CrateNum(record) << ",\n"
         << "\"slot_num\": " << SlotNum(record) << ",\n"
