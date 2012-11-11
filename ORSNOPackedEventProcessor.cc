@@ -174,21 +174,48 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::ProcessDataRecord(UInt_t
     }
     else if (thisDataId == fRunId) {
         ORDataProcessor::EReturnCode code = ORCompoundDataProcessor::ProcessDataRecord(record);
-                if (code != kSuccess) return code;
+        if (code != kSuccess) return code;
 
+        const std::string data(fRunDecoder.ToJson(record, GetRunContext()->GetRunNumber(), GetRunContext()->GetSubRunNumber()));
+
+        cout << "::::Run record:\n" << data << endl;
+
+        zmq::message_t msg(data.length());
+        memcpy((void*) msg.data(), data.c_str(), data.length());
+        socket_json->send(msg);
+ 
+        //builder template follows
         /*
-        cout << "Run Packet obtained" << endl;
-        if (record[1] & 0x8) cout << "Run HeartBeat obtained" << endl;
-        else if (record[1] & 0x1) {
+        if (fRunDecoder.IsHeartBeat(record)) {
+            cout << "Run HeartBeat obtained" << endl;
+            cout << "heartbeat time: " << fRunDecoder.UtimeOf(record) << endl;
+            cout << "time to the next heartbeat: " << record[2] << endl;
+        }
+        else if (fRunDecoder.IsRunStart(record)) {
             cout << "Run Start obtained" << endl;
             if (record[1] & 0x2) cout << "was soft start" << endl;
             if (record[1] & 0x4) cout << "was remote control start" << endl;
+            cout << "run start time: " << fRunDecoder.UtimeOf(record) << endl;
         }
-        else {
+        else if (fRunDecoder.IsPrepareForSubRun(record)) {
+            cout << "Subrun Stop obtained" << endl;
+            cout << "subrun stop time: " << fRunDecoder.UtimeOf(record) << endl;
+        }
+        else if (fRunDecoder.IsSubRunStart(record)) {
+            cout << "Subrun Start obtained" << endl;
+            cout << "subrun start time: " << fRunDecoder.UtimeOf(record) << endl;
+        }
+        else if (fRunDecoder.IsRunStop(record)) {
             cout << "Run End obtained" << endl;
             if (record[1] & 0x2) cout << "soft end" << endl;
             if (record[1] & 0x4) cout << "remote control" << endl;
+            cout << "run stop time: " << fRunDecoder.UtimeOf(record) << endl;
         }
+        else {
+            //some other run record we don't care about
+        }
+        cout << "run number: " << GetRunContext()->GetRunNumber() << endl;
+        cout << "subrun number: " << GetRunContext()->GetSubRunNumber() << endl;
         */
     }
     else if (thisDataId == fCMOSDataId) {

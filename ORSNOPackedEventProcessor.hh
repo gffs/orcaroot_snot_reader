@@ -6,6 +6,7 @@
 #include "ORPMTDecoder.hh"
 #include "ORCMOSDecoder.hh"
 #include "ORRunDecoder.hh"
+#include "ORSNOTRunDecoder.hh"
 #include "ORCaen1720Decoder.hh"
 #include "ORFIFODecoder.hh"
 #include "ORPMTBaseCurrentDecoder.hh"
@@ -29,7 +30,7 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     ORCMOSDecoder fCMOSDecoder;
     ORPMTDecoder fPMTDecoder;
     ORCaen1720Decoder fCaenDecoder;
-    ORRunDecoder fRunDecoder;
+    ORSNOTRunDecoder fRunDecoder;
     ORFIFODecoder fFIFODecoder;
     ORPMTBaseCurrentDecoder fPMTBaseCurrentDecoder;
     ORXL3HVDecoder fXL3HVDecoder;
