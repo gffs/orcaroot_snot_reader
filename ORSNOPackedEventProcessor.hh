@@ -3,6 +3,7 @@
 
 #include "ORCompoundDataProcessor.hh"
 #include "ORMTCDecoder.hh"
+#include "ORMTCStatusDecoder.hh"
 #include "ORPMTDecoder.hh"
 #include "ORCMOSDecoder.hh"
 #include "ORRunDecoder.hh"
@@ -27,6 +28,7 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
 
   protected:
     ORMTCDecoder fMTCDecoder;
+    ORMTCStatusDecoder fMTCStatusDecoder;
     ORCMOSDecoder fCMOSDecoder;
     ORPMTDecoder fPMTDecoder;
     ORCaen1720Decoder fCaenDecoder;
@@ -38,6 +40,7 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     ORFECVltDecoder fFECVltDecoder;
 
     UInt_t fMTCDataId; 
+    UInt_t fMTCStatusDataId; 
     UInt_t fPMTDataId; 
     UInt_t fCaenDataId; 
     UInt_t fCMOSDataId;
@@ -49,6 +52,7 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     UInt_t fFECVltDataId;
 
     ORDataProcessor* fMTCProcessor;
+    ORDataProcessor* fMTCStatusProcessor;
     ORDataProcessor* fPMTProcessor;
     ORDataProcessor* fCMOSProcessor;
     ORDataProcessor* fCaenProcessor;

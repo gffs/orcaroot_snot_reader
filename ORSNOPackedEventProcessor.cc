@@ -14,6 +14,9 @@ ORSNOPackedEventProcessor::ORSNOPackedEventProcessor(std::string /*label*/)
     fMTCProcessor = new ORDataProcessor(&fMTCDecoder);
     AddProcessor(fMTCProcessor);
 
+    fMTCStatusProcessor = new ORDataProcessor(&fMTCStatusDecoder);
+    AddProcessor(fMTCStatusProcessor);
+
     fPMTProcessor = new ORDataProcessor(&fPMTDecoder);
     AddProcessor(fPMTProcessor);
 
@@ -60,6 +63,7 @@ ORSNOPackedEventProcessor::~ORSNOPackedEventProcessor()
     delete context;
 
     delete fMTCProcessor;
+    delete fMTCStatusProcessor;
     delete fPMTProcessor;
     delete fCMOSProcessor;
     delete fCaenProcessor;
@@ -76,6 +80,7 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::StartRun()
 {
 
     fMTCDataId = fMTCProcessor->GetDataId();
+    fMTCStatusDataId = fMTCStatusProcessor->GetDataId();
     fPMTDataId = fPMTProcessor->GetDataId();
     fCMOSDataId = fCMOSProcessor->GetDataId();
     fCaenDataId = fCaenProcessor->GetDataId();
@@ -177,9 +182,6 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::ProcessDataRecord(UInt_t
         if (code != kSuccess) return code;
 
         const std::string data(fRunDecoder.ToJson(record, GetRunContext()->GetRunNumber(), GetRunContext()->GetSubRunNumber()));
-
-        cout << "::::Run record:\n" << data << endl;
-
         zmq::message_t msg(data.length());
         memcpy((void*) msg.data(), data.c_str(), data.length());
         socket_json->send(msg);
@@ -268,6 +270,16 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::ProcessDataRecord(UInt_t
         if (code != kSuccess) return code;
 
         const std::string data(fFECVltDecoder.ToJson(record));
+        zmq::message_t msg(data.length());
+        memcpy((void*) msg.data(), data.c_str(), data.length());
+        socket_json->send(msg);
+    }
+    else if (thisDataId == fMTCStatusDataId) {
+        ORDataProcessor::EReturnCode code = ORCompoundDataProcessor::ProcessDataRecord(record);
+        if (code != kSuccess) return code;
+
+        const std::string data(fMTCStatusDecoder.ToJson(record));
+        cout << ":::MTC Status\n" << data << endl;
         zmq::message_t msg(data.length());
         memcpy((void*) msg.data(), data.c_str(), data.length());
         socket_json->send(msg);
