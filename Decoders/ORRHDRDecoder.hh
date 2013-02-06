@@ -39,10 +39,10 @@ class ORRHDRDecoder : public ORVDataDecoder
         { return record[7]; }
 
     virtual inline ULong64_t RunMask(UInt_t* record)
-        { return (ULong64_t)(record[8] + ((ULong64_t)(record[9])) << 32); }
+        { return (ULong64_t)(record[8] + ((ULong64_t)(record[12])) << 32); }
 
     virtual inline UInt_t GtCrateMask(UInt_t* record)
-        { return record[10]; 
+        { return record[9]; 
 }
     virtual const std::string ToJson(UInt_t* record);
 
