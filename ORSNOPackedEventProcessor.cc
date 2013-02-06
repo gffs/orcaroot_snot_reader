@@ -44,6 +44,12 @@ ORSNOPackedEventProcessor::ORSNOPackedEventProcessor(std::string /*label*/)
     fFECVltProcessor = new ORDataProcessor(&fFECVltDecoder);
     AddProcessor(fFECVltProcessor);
 
+    fEPEDProcessor = new ORDataProcessor(&fEPEDDecoder);
+    AddProcessor(fEPEDProcessor);
+
+    fRHDRProcessor = new ORDataProcessor(&fRHDRDecoder);
+    AddProcessor(fRHDRProcessor);
+
     context = new zmq::context_t(1);
     socket_json = new zmq::socket_t(*context, ZMQ_PUB);
     try {
@@ -73,6 +79,8 @@ ORSNOPackedEventProcessor::~ORSNOPackedEventProcessor()
     delete fXL3HVProcessor;
     delete fXL3VltProcessor;
     delete fFECVltProcessor;
+    delete fEPEDProcessor;
+    delete fRHDRProcessor;
 }
 
 
@@ -90,6 +98,8 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::StartRun()
     fXL3HVDataId = fXL3HVProcessor->GetDataId();
     fXL3VltDataId = fXL3VltProcessor->GetDataId();
     fFECVltDataId = fFECVltProcessor->GetDataId();
+    fEPEDDataId = fEPEDProcessor->GetDataId();
+    fRHDRDataId = fRHDRProcessor->GetDataId();
 
     return kSuccess;
 }
@@ -279,7 +289,24 @@ ORDataProcessor::EReturnCode ORSNOPackedEventProcessor::ProcessDataRecord(UInt_t
         if (code != kSuccess) return code;
 
         const std::string data(fMTCStatusDecoder.ToJson(record));
-        cout << ":::MTC Status\n" << data << endl;
+        zmq::message_t msg(data.length());
+        memcpy((void*) msg.data(), data.c_str(), data.length());
+        socket_json->send(msg);
+    }
+    else if (thisDataId == fEPEDDataId) {
+        ORDataProcessor::EReturnCode code = ORCompoundDataProcessor::ProcessDataRecord(record);
+        if (code != kSuccess) return code;
+
+        const std::string data(fEPEDDecoder.ToJson(record));
+        zmq::message_t msg(data.length());
+        memcpy((void*) msg.data(), data.c_str(), data.length());
+        socket_json->send(msg);
+    }
+    else if (thisDataId == fRHDRDataId) {
+        ORDataProcessor::EReturnCode code = ORCompoundDataProcessor::ProcessDataRecord(record);
+        if (code != kSuccess) return code;
+
+        const std::string data(fRHDRDecoder.ToJson(record));
         zmq::message_t msg(data.length());
         memcpy((void*) msg.data(), data.c_str(), data.length());
         socket_json->send(msg);

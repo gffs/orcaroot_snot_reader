@@ -139,12 +139,42 @@ MTC status pulled from MTCD each second.
 
     {
     "type": "mtc_status",
-    "GTID": 0x123456;
-    "cnt_10MHz": 0x1234567890123 //53 bits, 10 MHz ticks since 1996-01-01T00:00:00Z
+    "GTID": 0x123456,
+    "cnt_10MHz": 0x1234567890123, //53 bits, 10 MHz ticks since 1996-01-01T00:00:00Z
     "time_10MHz": "yyyy-MM-DDTHH:mm:ss.SSZ", //from cnt_10MHz
     "data_available": false,
     "read_pointer": 0,
     "write_next_pointer": 0,
     "num_records_in_mem": 0, //from read and write pointers and data available bit
+    }
+
+EPED record
+-----------
+ECA info at the beginning of every ECA step
+
+    {
+    "type": "eped_record",
+    "coarse_delay": 100, //nsec
+    "fine_delay": 0, //clicks
+    "charge_pulse_amp": 0, //clicks
+    "pedestal_width": 60, //nsec
+    "cal_type": 11, //pattern ID (1 to 4) + 10 * (1 ped, 2 tslope, 3 qslope)
+    "step_number": 0
+    }
+
+RHDR record
+-----------
+Run type information duplicating the run document
+
+    {
+    "type": "rhdr_record",
+    "date": day + month * 100 + year * 10000,
+    "time": sec * 100 + min * 10000 + year * 1000000,
+    "daq_code_version": 8045, // svn rev
+    "run_number": 0,
+    "calibration_trial_number": 0,
+    "source_mask": 0,
+    "run_mask": 0, // 64bit
+    "gt_crate_mask": 0
     }
 

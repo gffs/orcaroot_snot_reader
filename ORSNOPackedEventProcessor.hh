@@ -14,6 +14,8 @@
 #include "ORXL3HVDecoder.hh"
 #include "ORXL3VltDecoder.hh"
 #include "ORFECVltDecoder.hh"
+#include "OREPEDDecoder.hh"
+#include "ORRHDRDecoder.hh"
 
 #include <zmq.hpp>
 
@@ -38,6 +40,8 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     ORXL3HVDecoder fXL3HVDecoder;
     ORXL3VltDecoder fXL3VltDecoder;
     ORFECVltDecoder fFECVltDecoder;
+    OREPEDDecoder fEPEDDecoder;
+    ORRHDRDecoder fRHDRDecoder;
 
     UInt_t fMTCDataId; 
     UInt_t fMTCStatusDataId; 
@@ -50,6 +54,8 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     UInt_t fXL3HVDataId;
     UInt_t fXL3VltDataId;
     UInt_t fFECVltDataId;
+    UInt_t fEPEDDataId;
+    UInt_t fRHDRDataId;
 
     ORDataProcessor* fMTCProcessor;
     ORDataProcessor* fMTCStatusProcessor;
@@ -62,6 +68,8 @@ class ORSNOPackedEventProcessor : public ORCompoundDataProcessor
     ORDataProcessor* fXL3HVProcessor;
     ORDataProcessor* fXL3VltProcessor;
     ORDataProcessor* fFECVltProcessor;
+    ORDataProcessor* fEPEDProcessor;
+    ORDataProcessor* fRHDRProcessor;
 
     zmq::context_t* context;
     zmq::socket_t* socket_json;
