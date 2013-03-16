@@ -46,7 +46,7 @@ const std::string ORMTCStatusDecoder::ToJson(UInt_t* record)
         << "\"type\": \"mtc_status\",\n"
         << "\"GTID\": " << GTID(record) << ",\n"
         << "\"cnt_10MHz\": " << Cnt10MHz(record) << ",\n"
-        << "\"time_10MHz\": " << Time10MHz(record) << ",\n"
+        << "\"time_10MHz\": \"" << Time10MHz(record) << "\",\n"
         << "\"data_available\": " << (DataAvailable(record)? "true": "false") << ",\n"
         << "\"read_pointer\": " << ReadPointer(record) << ",\n"
         << "\"write_next_pointer\": " << WriteNextPointer(record) << ",\n"
