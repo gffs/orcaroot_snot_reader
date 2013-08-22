@@ -39,7 +39,7 @@ class ORCaen1720Decoder : public ORVDataDecoder
 	virtual void CopyTrace(UInt_t* record, UShort_t* Waveform, UInt_t numSamples);
 
         virtual std::string GetDataObjectPath()
-                { return "ORCaen1720Model:CAEN"; }
+                { return "ORCaen1720Model:CAEN1720"; }
 
 };
 
