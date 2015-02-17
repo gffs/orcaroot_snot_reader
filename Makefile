@@ -9,7 +9,7 @@ SOURCES = $(wildcard *.cc) $(wildcard Decoders/*.cc)
 HEADERS = $(SOURCES:.cc=.hh)
 OBJECTS = $(SOURCES:.cc=.o)
 
-CXXFLAGS = -O3 -W -Wall -fPIC -g -I./Decoders
+CXXFLAGS = -O3 -W -Wall -fPIC -g -I./Decoders $(CFLAGS)
 ORLIBS += -lzmq
 
 CLANG := $(shell which clang)

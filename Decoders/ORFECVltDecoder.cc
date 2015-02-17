@@ -1,4 +1,5 @@
 #include "ORFECVltDecoder.hh"
+#include "ORUtils.hh"
 
 #include <string>
 #include <iomanip>
