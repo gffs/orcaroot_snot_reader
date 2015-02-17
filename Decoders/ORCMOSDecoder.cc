@@ -1,4 +1,5 @@
 #include "ORCMOSDecoder.hh"
+#include "ORUtils.hh"
 
 #include <string>
 #include <sstream>

@@ -1,4 +1,5 @@
 #include "ORPMTBaseCurrentDecoder.hh"
+#include "ORUtils.hh"
 
 #include <string>
 #include <sstream>

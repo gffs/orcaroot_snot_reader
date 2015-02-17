@@ -3,6 +3,7 @@
 #include "ORSNOPackedEventProcessor.hh"
 #include "ORRunContext.hh"
 #include "ORLogger.hh"
+#include "ORUtils.hh"
 #include <iostream>
 
 using namespace std;

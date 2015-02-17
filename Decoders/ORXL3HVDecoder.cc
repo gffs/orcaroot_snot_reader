@@ -1,4 +1,5 @@
 #include "ORXL3HVDecoder.hh"
+#include "ORUtils.hh"
 
 #include <string>
 #include <iomanip>

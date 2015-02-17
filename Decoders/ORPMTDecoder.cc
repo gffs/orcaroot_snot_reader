@@ -3,6 +3,7 @@
 #include "TROOT.h"
 #include "ORPMTDecoder.hh"
 #include "ORLogger.hh"
+#include "ORUtils.hh"
 #include <netinet/in.h>
 
 ORPMTDecoder::ORPMTDecoder() {
